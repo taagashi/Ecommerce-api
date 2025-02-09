@@ -1,7 +1,6 @@
 package br.com.thaua.Ecommerce.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
