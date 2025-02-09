@@ -1,15 +1,23 @@
 package br.com.thaua.Ecommerce.controllers;
 
 import br.com.thaua.Ecommerce.dtos.ClienteRequest;
+import br.com.thaua.Ecommerce.dtos.ClienteResponse;
+import br.com.thaua.Ecommerce.entities.ClienteEntity;
+import br.com.thaua.Ecommerce.mappers.Converter;
+import br.com.thaua.Ecommerce.pagination.Pagina;
 import br.com.thaua.Ecommerce.services.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/cliente")
 @Tag(
@@ -18,14 +26,30 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class ClienteController {
     private ClienteService clienteService;
+    private Converter converter;
 
     @Operation(
             summary = "Adicionar cliente",
             description = "Adiciona um cliente passando campos de nome, email, cpf e telefone"
     )
     @PostMapping
-    public ResponseEntity<ClienteRequest> adicionarCliente(@RequestBody ClienteRequest clienteRequest)
+    public ResponseEntity<ClienteResponse> adicionarCliente(@RequestBody ClienteRequest clienteRequest)
     {
-        return ResponseEntity.ok(clienteRequest);
+        ClienteEntity clienteEntity = clienteService.adicionarCliente(converter.toEntity(clienteRequest));
+        return ResponseEntity.ok(converter.toResponse(clienteEntity));
+    }
+
+    @Operation(
+            summary = "Exibir clientes",
+            description = "Devolve uma lista de clientes com paginação"
+    )
+    @GetMapping
+    public ResponseEntity<Pagina<ClienteResponse>> exibirClientes(@ParameterObject @PageableDefault(size = 4)Pageable pageable)
+    {
+        Page<ClienteEntity> page = clienteService.exibirClientes(pageable);
+
+        Pagina<ClienteResponse> paginaClienteResponse = new Pagina<>(page.map(clienteEntity -> converter.toResponse(clienteEntity)));
+
+        return ResponseEntity.ok(paginaClienteResponse);
     }
 }

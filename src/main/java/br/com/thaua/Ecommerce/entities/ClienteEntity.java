@@ -1,5 +1,6 @@
 package br.com.thaua.Ecommerce.entities;
 
+import br.com.thaua.Ecommerce.dtos.ClienteResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
