@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/cliente")
 @Tag(
         name = "Controlador de clientes",
         description = "responsavel por gerenciar tudo relacionado ao cliente"
@@ -51,5 +51,25 @@ public class ClienteController {
         Pagina<ClienteResponse> paginaClienteResponse = new Pagina<>(page.map(clienteEntity -> converter.toResponse(clienteEntity)));
 
         return ResponseEntity.ok(paginaClienteResponse);
+    }
+
+    @Operation(
+            summary = "Buscar cliente por id",
+            description = "Exibe cliente atraves de seu id do tipo long"
+    )
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponse> buscarClienteId(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(converter.toResponse(clienteService.buscarClienteId(id)));
+    }
+
+    @Operation(
+            summary = "Atualizar informacoes do cliente",
+            description = "Atualiza informacoes do cliente passando o id do cliente que vai ser atualiado"
+    )
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponse> atualizarInformacoes(@PathVariable Long id, @RequestBody ClienteRequest clienteRequest)
+    {
+        return ResponseEntity.ok(converter.toResponse(clienteService.atualizarCliente(id, clienteRequest)));
     }
 }

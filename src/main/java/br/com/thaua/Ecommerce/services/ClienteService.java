@@ -25,4 +25,20 @@ public class ClienteService {
     {
         return clienteRepository.findAll(pageable);
     }
+
+    public ClienteEntity buscarClienteId(Long id)
+    {
+        return clienteRepository.findById(id).orElse(null);
+    }
+
+    public ClienteEntity atualizarCliente(Long id, ClienteRequest clienteRequest)
+    {
+        ClienteEntity clienteEntity = clienteRepository.findById(id).orElse(null);
+        clienteEntity.setNome(clienteRequest.getNome());
+        clienteEntity.setTelefone(clienteRequest.getTelefone());
+        clienteEntity.setEmail(clienteRequest.getEmail());
+        clienteEntity.setCpf(clienteRequest.getCpf());
+
+        return clienteRepository.save(clienteEntity);
+    }
 }
