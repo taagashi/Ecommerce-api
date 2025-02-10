@@ -1,6 +1,5 @@
 package br.com.thaua.Ecommerce.entities;
 
-import br.com.thaua.Ecommerce.dtos.ClienteResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,7 @@ public class ClienteEntity extends AbstractEntity<Long>{
     @CreationTimestamp
     private LocalDateTime dataCadastro;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoEntity> pedidos;
 
     @OneToOne

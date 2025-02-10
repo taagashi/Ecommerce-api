@@ -1,7 +1,7 @@
 package br.com.thaua.Ecommerce.controllers;
 
-import br.com.thaua.Ecommerce.dtos.ClienteRequest;
-import br.com.thaua.Ecommerce.dtos.ClienteResponse;
+import br.com.thaua.Ecommerce.dtos.cliente.ClienteRequest;
+import br.com.thaua.Ecommerce.dtos.cliente.ClienteResponse;
 import br.com.thaua.Ecommerce.entities.ClienteEntity;
 import br.com.thaua.Ecommerce.mappers.Converter;
 import br.com.thaua.Ecommerce.pagination.Pagina;
@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/clientes")
 @Tag(
         name = "Controlador de clientes",
         description = "responsavel por gerenciar tudo relacionado ao cliente"

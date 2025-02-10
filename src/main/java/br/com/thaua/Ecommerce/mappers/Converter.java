@@ -1,7 +1,7 @@
 package br.com.thaua.Ecommerce.mappers;
 
-import br.com.thaua.Ecommerce.dtos.ClienteRequest;
-import br.com.thaua.Ecommerce.dtos.ClienteResponse;
+import br.com.thaua.Ecommerce.dtos.cliente.ClienteRequest;
+import br.com.thaua.Ecommerce.dtos.cliente.ClienteResponse;
 import br.com.thaua.Ecommerce.entities.ClienteEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
