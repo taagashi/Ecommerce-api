@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/clientes")
 @Tag(
-        name = "Enderecos",
+        name = "Controlador de enderecos",
         description = "Controlador de enderecos de clientes"
 )
 public class EnderecoController {
