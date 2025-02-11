@@ -26,11 +26,35 @@ public class EnderecoController {
             summary = "Adicionar endereco para um cliente",
             description = "Adiciona um endereco para um cliente atribuindo id do cliente e todos os campos do endereco"
     )
-    @PostMapping("/{id}/enderecos")
-    public ResponseEntity<EnderecoResponse> adicionarEnderecoCliente(@PathVariable Long id, @RequestBody EnderecoRequest enderecoRequest)
+    @PostMapping("/{clienteId}/enderecos")
+    public ResponseEntity<EnderecoResponse> adicionarEnderecoCliente(@PathVariable Long clienteId, @RequestBody EnderecoRequest enderecoRequest)
     {
         EnderecoEntity enderecoEntity = converter.toEntity(enderecoRequest);
-        EnderecoEntity enderecoAdicionado = enderecoService.adicionarEndereco(id, enderecoEntity);
+        EnderecoEntity enderecoAdicionado = enderecoService.adicionarEndereco(clienteId, enderecoEntity);
         return ResponseEntity.ok(converter.toResponse(enderecoAdicionado));
+    }
+
+    @Operation(
+            summary = "Exibir endereco de cliente",
+            description = "Exibe o endereco de um cliente atraves do id do cliente"
+    )
+    @GetMapping("/{clienteId}/enderecos")
+    public ResponseEntity<EnderecoResponse> exibirEnderecoCliente(@PathVariable Long clienteId)
+    {
+        EnderecoEntity enderecoEntity = enderecoService.exibirEnderecoCliente(clienteId);
+        return ResponseEntity.ok(converter.toResponse(enderecoEntity));
+    }
+
+    @Operation(
+            summary = "Atualizar informacoes de endereco do cliente",
+            description = "Atualiza informacoes passando um novo endereco para um cliente rastreado pelo seu id"
+    )
+    @PutMapping("/{clienteId}/enderecos")
+    public ResponseEntity<EnderecoResponse> atualizarEnderecoCliente(@PathVariable Long clienteId, @RequestBody EnderecoRequest enderecoRequest)
+    {
+       EnderecoEntity enderecoEntity = converter.toEntity(enderecoRequest);
+       return ResponseEntity.ok(converter.toResponse(enderecoService.atualizarEnderecoCliente(
+               clienteId, enderecoEntity
+       )));
     }
 }

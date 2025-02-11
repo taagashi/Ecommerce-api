@@ -15,9 +15,9 @@ public class EnderecoService {
     private ClienteRepository clienteRepository;
 
     @Transactional
-    public EnderecoEntity adicionarEndereco(Long id, EnderecoEntity enderecoEntity)
+    public EnderecoEntity adicionarEndereco(Long clienteId, EnderecoEntity enderecoEntity)
     {
-        ClienteEntity clienteEntity = clienteRepository.findById(id).orElse(null);
+        ClienteEntity clienteEntity = clienteRepository.findById(clienteId).orElse(null);
 
         if(clienteEntity == null || clienteEntity.getEndereco() != null) {return null;}
 
@@ -28,5 +28,33 @@ public class EnderecoService {
         clienteRepository.save(clienteEntity);
 
         return enderecoEntitySave;
+    }
+
+    public EnderecoEntity exibirEnderecoCliente(Long clienteId)
+    {
+        return enderecoRepository.findByClienteId(clienteId).orElse(null);
+    }
+
+    public EnderecoEntity atualizarEnderecoCliente(Long idCliente, EnderecoEntity enderecoEntity)
+    {
+        ClienteEntity clienteEntity = clienteRepository.findById(idCliente).orElse(null);
+
+        if(clienteEntity == null){return null;}
+
+        if(clienteEntity.getEndereco() == null){adicionarEndereco(idCliente, enderecoEntity);}
+
+        clienteEntity.getEndereco().setRua(enderecoEntity.getRua());
+        clienteEntity.getEndereco().setNumero(enderecoEntity.getNumero());
+        clienteEntity.getEndereco().setBairro(enderecoEntity.getBairro());
+        clienteEntity.getEndereco().setCidade(enderecoEntity.getCidade());
+        clienteEntity.getEndereco().setEstado(enderecoEntity.getEstado());
+        clienteEntity.getEndereco().setCep(enderecoEntity.getCep());
+
+        clienteRepository.save(clienteEntity);
+
+        enderecoEntity.setId(clienteEntity.getEndereco().getId());
+        enderecoEntity.setCliente(clienteEntity);
+
+        return enderecoEntity;
     }
 }
