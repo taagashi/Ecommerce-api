@@ -72,4 +72,14 @@ public class ClienteController {
     {
         return ResponseEntity.ok(converter.toResponse(clienteService.atualizarCliente(id, clienteRequest)));
     }
+
+    @Operation(
+            summary = "Deletar cliente",
+            description = "Deleta um cliente através de seu id"
+    )
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarCliente(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(clienteService.deletarCliente(id));
+    }
 }

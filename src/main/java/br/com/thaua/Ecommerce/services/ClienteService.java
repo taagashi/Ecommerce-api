@@ -41,4 +41,16 @@ public class ClienteService {
 
         return clienteRepository.save(clienteEntity);
     }
+
+    @Transactional
+    public String deletarCliente(Long id)
+    {
+        ClienteEntity clienteEntity = buscarClienteId(id);
+
+        if(clienteEntity == null){return "Não existe cliente com esse id";}
+
+        clienteRepository.deleteById(id);
+
+        return clienteEntity.getNome() + " foi deletado com sucesso";
+    }
 }

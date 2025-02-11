@@ -26,7 +26,7 @@ public class ClienteEntity extends AbstractEntity<Long>{
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoEntity> pedidos;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "endereco_id")
     private EnderecoEntity endereco;
 }
