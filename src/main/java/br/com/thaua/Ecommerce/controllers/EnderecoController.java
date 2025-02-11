@@ -57,4 +57,14 @@ public class EnderecoController {
                clienteId, enderecoEntity
        )));
     }
+
+    @Operation(
+            summary = "Deletar endereco do cliente",
+            description = "Deleta endereco do cliente atraves do id do cliente"
+    )
+    @DeleteMapping("/{clienteId}/enderecos")
+    public ResponseEntity<String> deletarEnderecoDeCliente(@PathVariable Long clienteId)
+    {
+        return ResponseEntity.ok(enderecoService.deletarEnderecoCliente(clienteId));
+    }
 }

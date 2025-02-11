@@ -57,4 +57,17 @@ public class EnderecoService {
 
         return enderecoEntity;
     }
+
+    public String deletarEnderecoCliente(Long clienteId)
+    {
+       ClienteEntity clienteEntity = clienteRepository.findById(clienteId).orElse(null);
+
+       if(clienteEntity == null){return "Não foi possivel encontrar cliente com esse id";}
+
+       clienteEntity.setEndereco(null);
+
+       clienteRepository.save(clienteEntity);
+
+       return "Endereço de " + clienteEntity.getNome() + " foi removido com sucesso";
+    }
 }
